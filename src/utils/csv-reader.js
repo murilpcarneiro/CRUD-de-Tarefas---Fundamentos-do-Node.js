@@ -5,18 +5,17 @@ import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const csv_path = `${__dirname}/../csv_import/fs_read.csv`;
 const API_URL = "http://localhost:3333";
 
 const processFile = async () => {
   const records = [];
-  const parser = fs
-    .createReadStream(`${__dirname}/../csv_import/fs_read.csv`)
-    .pipe(
-      parse({
-        columns: true,
-        skip_empty_lines: true,
-      })
-    );
+  const parser = fs.createReadStream(csv_path).pipe(
+    parse({
+      columns: true,
+      skip_empty_lines: true,
+    })
+  );
   for await (const record of parser) {
     records.push(record);
   }
