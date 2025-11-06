@@ -9,12 +9,14 @@ const API_URL = "http://localhost:3333";
 
 const processFile = async () => {
   const records = [];
-  const parser = fs.createReadStream(`${__dirname}/fs_read.csv`).pipe(
-    parse({
-      columns: true,
-      skip_empty_lines: true,
-    })
-  );
+  const parser = fs
+    .createReadStream(`${__dirname}/../csv_import/fs_read.csv`)
+    .pipe(
+      parse({
+        columns: true,
+        skip_empty_lines: true,
+      })
+    );
   for await (const record of parser) {
     records.push(record);
   }
