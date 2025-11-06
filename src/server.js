@@ -1,7 +1,10 @@
 import http from "node:http";
+import { json } from "./middlewares/json.js";
 import { routes } from "./routes.js";
 
 const server = http.createServer((req, res) => {
+  json(req, res);
+
   routes.find((route) => {
     if (route.method === req.method && route.url === req.url) {
       return route.handler(req, res);
