@@ -65,11 +65,30 @@ export const routes = [
   {
     method: "DELETE",
     path: buildRoutePath("/tasks/:id"),
-    handler: (req, res) => {},
+    handler: (req, res) => {
+      const { id } = req.params;
+      const task = database.select("tasks", { id })[0];
+      if (!task) {
+        return res.writeHead(404).end();
+      }
+      database.delete("tasks", id);
+      return res.writeHead(204).end();
+    },
   },
   {
     method: "PATCH",
     path: buildRoutePath("/tasks/:id/complete"),
-    handler: (req, res) => {},
+    handler: (req, res) => {
+      const { id } = req.params;
+      const task = database.select("tasks", { id })[0];
+      if (!task) {
+        return res.writeHead(404).end();
+      }
+      database.update("tasks", id, {
+        ...task,
+        completed_at: new Date().toISOString(),
+      });
+      return res.writeHead(204).end();
+    },
   },
 ];
