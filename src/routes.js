@@ -6,4 +6,9 @@ export const routes = [
       res.end("Hello World");
     },
   },
+  {
+    method: "POST",
+    url: "/tasks",
+    handler: (req, res) => {},
+  },
 ];
