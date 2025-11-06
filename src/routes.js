@@ -52,12 +52,13 @@ export const routes = [
         return res.writeHead(404).end();
       }
       const task = tasks[0];
-      database.update("tasks", id, {
+      const dataToUpdate = {
         ...task,
-        title,
-        description,
         updated_at: new Date().toISOString(),
-      });
+      };
+      if (title) dataToUpdate.title = title;
+      if (description) dataToUpdate.description = description;
+      database.update("tasks", id, dataToUpdate);
       return res.writeHead(204).end();
     },
   },
